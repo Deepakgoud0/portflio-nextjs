@@ -3,19 +3,64 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --primary-color: #00ff88;
+  --secondary-color: #ff3366;
+  --accent-color: #00ffff;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  margin: 0;
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #000000;
+  color: var(--text-primary);
 }
+
+h1 {
+  color: var(--text-primary);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+}
+
+section {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+
+/* Add gradient text effect for headings */
+.gradient-text {
+  background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* Add glow effect for important elements */
+.glow-effect {
+  text-shadow: 0 0 10px var(--primary-color);
+}
+
+/* Vibrant link colors */
+a {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-color);
+  text-shadow: 0 0 8px var(--accent-color);
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+
