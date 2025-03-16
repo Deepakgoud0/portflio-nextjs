@@ -1,9 +1,44 @@
 "use client";
 
-import React from 'react';
-import SkillsOctagon from './SkillsOctagon';
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import BallCanvas from './BallCanvas';
+
+// Dynamically import BallCanvas with no SSR
+const BallCanvasDynamic = dynamic(() => import('./BallCanvas'), { ssr: false });
+
+const technologies = [
+  {
+    name: "React",
+    icon: "/skills/react.png",
+  },
+  {
+    name: "JavaScript",
+    icon: "/skills/javascript.png",
+  },
+  {
+    name: "Python",
+    icon: "/skills/python.png",
+  },
+  {
+    name: "HTML",
+    icon: "/skills/html.png",
+  },
+  {
+    name: "CSS",
+    icon: "/skills/css.png",
+  },
+];
 
 const Skills = () => {
+  // Add state to control rendering of client-side components
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Only render client components after mount
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <section id="skills" className="py-20 relative overflow-hidden">
       {/* Background gradient */}
@@ -14,8 +49,8 @@ const Skills = () => {
           Skills & Technologies
         </h2>
         
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          <div className="w-full md:w-1/2 space-y-6">
+        <div className="flex flex-col items-center justify-between gap-12">
+          <div className="w-full max-w-2xl space-y-6">
             <div className="bg-black/30 backdrop-blur-sm border border-gray-800 rounded-xl p-6 transform transition-all duration-500 hover:border-[#00ff88]">
               <h3 className="text-2xl font-semibold mb-4 text-[#00ff88]">Core Technologies</h3>
               <ul className="text-gray-300 space-y-2">
@@ -53,8 +88,13 @@ const Skills = () => {
             </div>
           </div>
 
-          <div className="w-full md:w-1/2">
-            <SkillsOctagon />
+          {/* 3D Balls Grid - Only render on client side */}
+          <div className="flex flex-row flex-wrap justify-center gap-10 mt-8">
+            {isMounted && technologies.map((technology) => (
+              <div className="w-28 h-28" key={technology.name}>
+                <BallCanvasDynamic icon={technology.icon} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

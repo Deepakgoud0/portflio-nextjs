@@ -5,14 +5,15 @@ import * as THREE from 'three';
 
 interface Skill {
   name: string;
-  color: string;
+  image: string;
 }
 
 const skills: Skill[] = [
-  { name: 'React', color: '#61DAFB' },
-  { name: 'JavaScript', color: '#F7DF1E' },
-  { name: 'HTML', color: '#E34F26' },
-  { name: 'CSS', color: '#1572B6' }
+  { name: 'React', image: '/skills/react.png' },
+  { name: 'JavaScript', image: '/skills/javascript.png' },
+  { name: 'Python', image: '/skills/python.png' },
+  { name: 'HTML', image: '/skills/html.png' },
+  { name: 'CSS', image: '/skills/css.png' }
 ];
 
 const SkillsOctagon = () => {
@@ -26,8 +27,6 @@ const SkillsOctagon = () => {
   useEffect(() => {
     if (!containerRef.current) return;
     
-    console.log('Initializing 3D scene');
-
     // Setup scene
     const scene = new THREE.Scene();
     sceneRef.current = scene;
@@ -39,7 +38,7 @@ const SkillsOctagon = () => {
       0.1,
       1000
     );
-    camera.position.z = 4;
+    camera.position.z = 5;
     cameraRef.current = camera;
 
     // Setup renderer
@@ -58,29 +57,36 @@ const SkillsOctagon = () => {
     octagonRef.current = octagonGroup;
     scene.add(octagonGroup);
 
+    // Create texture loader
+    const textureLoader = new THREE.TextureLoader();
+
     // Create spherical arrangement of skill planes
-    const radius = 2;
+    const radius = 2.5;
     const segments = skills.length;
 
-    // Create planes with colored materials
+    // Create planes with skill textures
     skills.forEach((skill, i) => {
       const angle = (i / segments) * Math.PI * 2;
-      const geometry = new THREE.PlaneGeometry(1.2, 1.2);
-      const material = new THREE.MeshBasicMaterial({
-        color: skill.color,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.8,
+      const geometry = new THREE.PlaneGeometry(1, 1);
+      
+      // Load texture for each skill
+      textureLoader.load(skill.image, (texture) => {
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: true,
+          opacity: 0.9,
+          side: THREE.DoubleSide
+        });
+        
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = Math.cos(angle) * radius;
+        mesh.position.y = Math.sin(angle) * radius;
+        mesh.lookAt(new THREE.Vector3(0, 0, 0));
+        mesh.rotateY(Math.PI / 2);
+        
+        mesh.userData = { skillName: skill.name };
+        octagonGroup.add(mesh);
       });
-      
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.x = Math.cos(angle) * radius;
-      mesh.position.y = Math.sin(angle) * radius;
-      mesh.lookAt(new THREE.Vector3(0, 0, 0));
-      mesh.rotateY(Math.PI / 6);
-      
-      mesh.userData = { skillName: skill.name };
-      octagonGroup.add(mesh);
     });
 
     // Add ambient light
@@ -110,7 +116,7 @@ const SkillsOctagon = () => {
       if (octagonRef.current) {
         octagonRef.current.rotation.y += (mousePosition.current.x * 0.3 - octagonRef.current.rotation.y) * 0.05;
         octagonRef.current.rotation.x += (mousePosition.current.y * 0.3 - octagonRef.current.rotation.x) * 0.05;
-        octagonRef.current.rotation.y += 0.002;
+        octagonRef.current.rotation.y += 0.001;
       }
 
       renderer.render(scene, camera);
@@ -140,7 +146,7 @@ const SkillsOctagon = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-[600px] relative bg-black/20">
+    <div ref={containerRef} className="w-full h-[600px] relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-20 pointer-events-none" />
     </div>
   );
