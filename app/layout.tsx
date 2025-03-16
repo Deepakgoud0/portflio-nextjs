@@ -1,12 +1,10 @@
-//use client";
-
 import React from "react";
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ThreeDBackground from "@/components/ThreeDBackground";
+import ClientLayout from "./clientLayout";
 
 // Use Inter font instead of Geist for now
 const inter = Inter({
@@ -27,16 +25,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased min-h-screen`}>
-        <ThreeDBackground />
-        <div className="relative min-h-screen">
-          <div className="relative z-10">
-            <Header />
-            <main className="relative z-10">
-              {children}
-            </main>
-            <Footer />
+        <ClientLayout>
+          <div className="relative min-h-screen">
+            <div className="relative z-10">
+              <Header />
+              <main className="relative z-10">
+                {children}
+              </main>
+              <Footer />
+            </div>
           </div>
-        </div>
+        </ClientLayout>
       </body>
     </html>
   );

@@ -223,6 +223,7 @@ const Projects = () => {
             onClick={prevProject}
             className="absolute -left-20 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-colors hover:scale-110 transform duration-300"
             disabled={isAnimating}
+            suppressHydrationWarning
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -232,6 +233,7 @@ const Projects = () => {
             onClick={nextProject}
             className="absolute -right-20 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-colors hover:scale-110 transform duration-300"
             disabled={isAnimating}
+            suppressHydrationWarning
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -248,6 +250,7 @@ const Projects = () => {
                   index === currentProject ? 'bg-[#00ff88] w-4 scale-110' : 'bg-white/30 hover:bg-white/50'
                 }`}
                 disabled={isAnimating}
+                suppressHydrationWarning
               />
             ))}
           </div>

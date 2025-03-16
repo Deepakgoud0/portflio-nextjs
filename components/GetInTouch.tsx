@@ -168,6 +168,7 @@ const GetInTouch = () => {
                 className={`w-full bg-black/50 border ${errors.name ? 'border-red-500' : 'border-gray-800'} 
                   rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00ff88] transition-colors`}
                 placeholder="Your name"
+                suppressHydrationWarning
               />
               {errors.name && (
                 <p className="mt-1 text-red-500">{errors.name.message}</p>
@@ -189,6 +190,7 @@ const GetInTouch = () => {
                 className={`w-full bg-black/50 border ${errors.email ? 'border-red-500' : 'border-gray-800'} 
                   rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00ff88] transition-colors`}
                 placeholder="Your email"
+                suppressHydrationWarning
               />
               {errors.email && (
                 <p className="mt-1 text-red-500">{errors.email.message}</p>
@@ -204,6 +206,7 @@ const GetInTouch = () => {
                 className={`w-full bg-black/50 border ${errors.message ? 'border-red-500' : 'border-gray-800'} 
                   rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00ff88] transition-colors`}
                 placeholder="Your message"
+                suppressHydrationWarning
               />
               {errors.message && (
                 <p className="mt-1 text-red-500">{errors.message.message}</p>
@@ -218,6 +221,7 @@ const GetInTouch = () => {
                   ? 'bg-gray-600 cursor-not-allowed' 
                   : 'bg-[#00ff88] hover:bg-[#00ffaa] text-black hover:scale-105'
                 }`}
+              suppressHydrationWarning
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>

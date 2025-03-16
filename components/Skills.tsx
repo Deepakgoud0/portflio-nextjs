@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import BallCanvas from './BallCanvas';
-
-// Dynamically import BallCanvas with no SSR
-const BallCanvasDynamic = dynamic(() => import('./BallCanvas'), { ssr: false });
+import Image from 'next/image';
 
 const technologies = [
   {
@@ -88,14 +84,30 @@ const Skills = () => {
             </div>
           </div>
 
-          {/* 3D Balls Grid - Only render on client side */}
-          <div className="flex flex-row flex-wrap justify-center gap-10 mt-8">
-            {isMounted && technologies.map((technology) => (
-              <div className="w-28 h-28" key={technology.name}>
-                <BallCanvasDynamic icon={technology.icon} />
-              </div>
-            ))}
-          </div>
+          {/* Simple Skills Grid */}
+          {isMounted && (
+            <div className="flex flex-row flex-wrap justify-center gap-10 mt-8">
+              {technologies.map((technology) => (
+                <div 
+                  className="w-28 h-28 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm 
+                             border border-gray-800 rounded-xl p-4 transform transition-all duration-300 
+                             hover:border-[#00ff88] hover:scale-105" 
+                  key={technology.name}
+                >
+                  <div className="relative w-16 h-16">
+                    <Image 
+                      src={technology.icon} 
+                      alt={technology.name}
+                      width={64}
+                      height={64}
+                      className="object-contain"
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-gray-300">{technology.name}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

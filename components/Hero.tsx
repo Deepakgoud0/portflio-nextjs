@@ -1,8 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Hero = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     contactSection?.scrollIntoView({ behavior: 'smooth' });
@@ -21,6 +27,7 @@ const Hero = () => {
           onClick={scrollToContact}
           className="mt-8 px-8 py-4 bg-[#00ff88] text-black rounded-lg font-semibold 
             hover:bg-[#00ffaa] transform hover:scale-105 transition-all duration-300"
+          suppressHydrationWarning
         >
           Get in Touch
         </button>
